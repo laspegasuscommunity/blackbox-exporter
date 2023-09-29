@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  #Это конфигурация Docker Compose для запуска подсистемы сбора метрик с сайтов.
+  blackbox-exporter:
+    container_name: blackbox-exporter
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+    image: prom/blackbox-exporter:latest
+    volumes:
+      - "./blackbox:/config"
+    expose:
+      - 9115
+
+networks:
+  default:
+    external: true
+    name: $NETWORK
